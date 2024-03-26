@@ -8,7 +8,7 @@ pipeline {
         SCANNER_HOME=tool 'sonar-scanner'
         AWS_ACCOUNT_ID = credentials('ACCOUNT_ID')
         AWS_ECR_REPO_NAME = credentials('ECR_BACK')
-        AWS_DEFAULT_REGION = 'ap-south-1'
+        AWS_DEFAULT_REGION = 'us-west-2'
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
     }
     stages {
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/laxman-kandhukuri/Three-Tier-DevSecOps'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/maome2024/Three-Tier-DevSecOps'
             }
         }
         stage('Sonarqube Analysis') {
@@ -82,20 +82,20 @@ pipeline {
         }
         stage('Checkout Code') {
             steps {
-                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/laxman-kandhukuri/Three-Tier-DevSecOps'
+                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/maome2024/Three-Tier-DevSecOps'
             }
         }
         stage('Update Deployment file') {
             environment {
                 GIT_REPO_NAME = "Three-Tier-DevSecOps"
-                GIT_USER_NAME = "laxman-kandhukuri"
+                GIT_USER_NAME = "maome2024"
             }
             steps {
                 dir('Kubernetes/Backend') {
                      withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh '''
-                            git config user.email "kandhukurilaxman96@gmail.com"
-                            git config user.name "laxman-kandhukuri"
+                            git config user.email "maome24.n@gmail.com"
+                            git config user.name "Ezenwanyi Obinigwe"
                             BUILD_NUMBER=${BUILD_NUMBER}
                             echo $BUILD_NUMBER
                             imageTag=$(grep -oP '(?<=backend:)[^ ]+' deployment.yaml)
